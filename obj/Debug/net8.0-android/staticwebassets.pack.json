@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpense\\obj\\Debug\\net8.0-android\\scopedcss\\bundle\\TrackYourExpense.styles.css",
+      "PackagePath": "staticwebassets\\TrackYourExpense.styles.css"
+    },
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpense\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpense\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpense\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpense\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpense\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.TrackYourExpense.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.build.TrackYourExpense.props",
+      "PackagePath": "build\\TrackYourExpense.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.buildMultiTargeting.TrackYourExpense.props",
+      "PackagePath": "buildMultiTargeting\\TrackYourExpense.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.buildTransitive.TrackYourExpense.props",
+      "PackagePath": "buildTransitive\\TrackYourExpense.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
