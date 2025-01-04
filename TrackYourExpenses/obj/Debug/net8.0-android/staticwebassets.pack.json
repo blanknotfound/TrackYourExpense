@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpenses\\TrackYourExpenses\\obj\\Debug\\net8.0-android\\scopedcss\\bundle\\TrackYourExpenses.styles.css",
+      "PackagePath": "staticwebassets\\TrackYourExpenses.styles.css"
+    },
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpenses\\TrackYourExpenses\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpenses\\TrackYourExpenses\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpenses\\TrackYourExpenses\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpenses\\TrackYourExpenses\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "E:\\.NET\\islingtonclass\\TrackYourExpense\\TrackYourExpenses\\TrackYourExpenses\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.TrackYourExpenses.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.build.TrackYourExpenses.props",
+      "PackagePath": "build\\TrackYourExpenses.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.buildMultiTargeting.TrackYourExpenses.props",
+      "PackagePath": "buildMultiTargeting\\TrackYourExpenses.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.buildTransitive.TrackYourExpenses.props",
+      "PackagePath": "buildTransitive\\TrackYourExpenses.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
