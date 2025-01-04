@@ -1,0 +1,53 @@
+﻿@page "/dashboard"
+@using TrackYourExpenses.Model
+@using System.Globalization
+
+<h1>Dashboard</h1>
+
+<div class="summary">
+    <h2>Summary</h2>
+    <p>Total Inflows: @TotalInflows</p>
+    <p>Total Outflows: @TotalOutflows</p>
+    <p>Total Debt: @TotalDebt</p>
+    <p>Cleared Debt: @ClearedDebt</p>
+    <p>Remaining Debt: @RemainingDebt</p>
+</div>
+
+<div>
+    <button @onclick="ShowFilters">Filter by Date Range</button>
+</div>
+
+<div>
+    <h2>Pending Debts</h2>
+    <ul>
+        @foreach (var debt in PendingDebts)
+        {
+            <li>@debt.Title: @debt.Amount</li>
+        }
+    </ul>
+</div>
+
+@code {
+    private decimal TotalInflows = 10000.00m;
+    private decimal TotalOutflows = 4500.00m;
+    private decimal TotalDebt = 2000.00m;
+    private decimal ClearedDebt = 500.00m;
+    private decimal RemainingDebt => TotalDebt - ClearedDebt;
+
+    private List<Transaction> PendingDebts = new()
+    {
+        new Transaction { Title = "Loan Payment 1", Amount = 1000.00m },
+        new Transaction { Title = "Loan Payment 2", Amount = 500.00m },
+    };
+
+    private void ShowFilters()
+    {
+        // Open a date filter modal
+    }
+
+    private class Transaction
+    {
+        public string Title { get; set; }
+        public decimal Amount { get; set; }
+    }
+}

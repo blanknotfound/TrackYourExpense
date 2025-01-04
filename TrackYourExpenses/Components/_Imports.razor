@@ -7,3 +7,13 @@
 @using Microsoft.JSInterop
 @using TrackYourExpenses
 @using TrackYourExpenses.Components
+@using TrackYourExpenses.Services.Interface
+
+
+@*Importing Mud blazor*@
+@using MudBlazor
+
+@*Interface Userservice inject*@
+@inject IUser UserService
+
+@inject NavigationManager Nav
