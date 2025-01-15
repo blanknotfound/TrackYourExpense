@@ -1,14 +1,15 @@
-﻿using TrackYourExpenses.Model;
-using TrackYourExpenses.Services.Interface;
+﻿using DataAccess.Services.Interface;
+using DataModel.Model;
+using TrackYourExpenses.Model.Abstraction;
 
-namespace TrackYourExpenses.Services
+namespace DataAccess.Services
 {
-    public class UserService : UserBase,IUser
+    public class UserService : UserBase, IUser
     {
         private List<User> _users;
 
-        public const string SeedUsername = "admin";
-        public const string SeedPassword = "password";
+        public const string SeedUsername = "sams";
+        public const string SeedPassword = "sams";
 
         public UserService()
         {

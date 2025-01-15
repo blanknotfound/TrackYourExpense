@@ -1,6 +1,6 @@
-﻿using TrackYourExpenses.Model;
+﻿using DataModel.Model;
 
-namespace TrackYourExpenses.Services.Interface
+namespace DataAccess.Services.Interface
 {
     public interface IUser
     {

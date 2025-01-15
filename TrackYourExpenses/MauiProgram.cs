@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DataAccess.Services;
+using DataAccess.Services.Interface;
+using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
 using TrackYourExpenses.Services;
 using TrackYourExpenses.Services.Interface;
+
 
 namespace TrackYourExpenses
 {
@@ -18,12 +21,14 @@ namespace TrackYourExpenses
                 });
 
             builder.Services.AddMauiBlazorWebView();
+            //adding mud blazor
+            builder.Services.AddMudServices();
 
 #if DEBUG
             //injecing the services of user service 
             builder.Services.AddScoped<IUser, UserService>();
-            //adding mud blazor
-            builder.Services.AddMudServices();
+            //injecing the services of Transaction service 
+            builder.Services.AddScoped<ITransaction, TransactionServices>();
             builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif

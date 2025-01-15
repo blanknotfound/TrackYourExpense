@@ -1,4 +1,5 @@
-﻿using TrackYourExpenses.Model;
+﻿using Microsoft.AspNetCore.Components;
+using DataModel.Model;
 
 namespace TrackYourExpenses.Components.Pages
 {
@@ -9,11 +10,16 @@ namespace TrackYourExpenses.Components.Pages
 
         private string ErrorMessage { get; set; } = string.Empty;
 
+        [CascadingParameter]
+        private UserState _LiveState { get; set; }
+
 
         private void HandleLogin()
         {
+            _LiveState.LiveUser = Users;
             if (UserService.Login(Users))
             {
+                ErrorMessage = "User registered successfully!";
                 Nav.NavigateTo("/dashboard");
             }
             else
@@ -21,6 +27,5 @@ namespace TrackYourExpenses.Components.Pages
                 ErrorMessage = "Username or password is invalid";
             }
         }
-
     }
 }

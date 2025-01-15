@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace TrackYourExpenses.Model
+namespace DataModel.Model
 {
     public abstract class TransactionServicesBase
     {

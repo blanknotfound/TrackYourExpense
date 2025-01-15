@@ -1,5 +1,76 @@
-﻿@page "/home"
+﻿@page "/Transaction"
+@using MudBlazor
+@using System.ComponentModel.DataAnnotations
+@using TrackYourExpenses.Model
 
-<h1>Hello, world!</h1>
+<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black};")">Add Inflow</MudText>
+<EditForm Model="@transaction">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="12" sm="7">
+            <MudCard>
+                <MudCardContent>
+                    <MudTextField Label="Title" HelperText="Max. 8 characters"
+                                  @bind-Value="transaction.Title" For="@(() => transaction.Title)" />
+                    <MudTextField Label="Amount" Class="mt-3"
+                                  @bind-Value="transaction.Amount" For="@(() => transaction.Amount)" />
+                    <MudSelect @bind-Value="transaction.tagId" Label="Select Tags" HelperText="Tag" Placeholder="Please Select" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                        @foreach (var customt in Tags)
+                        {
+                            <MudSelectItem Value=@(customt.Id)>@(customt.Name)</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudTextField Label="Type" HelperText="" Class="mt-3"
+                                  @bind-Value="transaction.Type" For="@(() => transaction.Type)" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="AddIncome">Add</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
 
-Welcome to your new app.
+<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black};")">Add CustomTags</MudText>
+<EditForm Model="@tag">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="12" sm="7">
+            <MudCard>
+                <MudCardContent>
+                    <MudTextField Label="Name" Class="mt-3"
+                                  @bind-Value="tag.Name" For="@(() => tag.Name)" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.LibraryAdd" Color="Color.Primary" OnClick="AddTag">Add</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+<MudText Typo="Typo.h3" Class="mud-width-full py-8 px-10" Style="@($"color:{Colors.Gray.Lighten5};")">Transaction</MudText>
+<MudTable Items="@DisplayT" Hover="true" SortLabel="Sort By" >
+    <HeaderContent>
+        <MudTh>Title</MudTh>
+        <MudTh>Amount</MudTh>
+        <MudTh>Type</MudTh>
+        <MudTh>Tags</MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Transaction, object>(x=>x.Date)">Date</MudTableSortLabel ></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Title">@context.Title</MudTd>
+        <MudTd DataLabel="Amount">@context.Amount</MudTd>
+        <MudTd DataLabel="Type">@context.Type</MudTd>
+        <MudTd DataLabel="Tags">
+            @{
+                var creator = TransactionServices.GettagsById(@context.tagId);
+                <span>@(creator == null ? "Unknown" : creator.Name)</span>
+            }
+        </MudTd>
+        <MudTd DataLabel="Date">@context.Date</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 10, 15 }" />
+    </PagerContent>
+</MudTable>

@@ -7,13 +7,20 @@
 @using Microsoft.JSInterop
 @using TrackYourExpenses
 @using TrackYourExpenses.Components
+@using DataModel.Model
+@using DataAccess.Services.Interface
 @using TrackYourExpenses.Services.Interface
 
 
 @*Importing Mud blazor*@
 @using MudBlazor
 
+
 @*Interface Userservice inject*@
 @inject IUser UserService
 
+@*Interface Userservice inject*@
+@inject ITransaction TransactionServices
+
+@*Navigation manager inject*@
 @inject NavigationManager Nav
