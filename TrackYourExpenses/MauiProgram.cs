@@ -29,6 +29,9 @@ namespace TrackYourExpenses
             builder.Services.AddScoped<IUser, UserService>();
             //injecing the services of Transaction service 
             builder.Services.AddScoped<ITransaction, TransactionServices>();
+            //injecing the services of Transaction service 
+            builder.Services.AddScoped<IDebtServices, DebtServices>();
+
             builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif

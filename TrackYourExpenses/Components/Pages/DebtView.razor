@@ -1,0 +1,23 @@
+﻿@page "/debt"
+@using System.ComponentModel.DataAnnotations
+
+<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black}")">Add CustomTags</MudText>
+<EditForm Model="@debt">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="12" sm="7">
+            <MudCard>
+                <MudCardContent>
+                    <MudTextField Label="Title" HelperText="Max. 8 characters" Class="mt-3"
+                                  @bind-Value="debt.Title" For="@(() => debt.Title)" />
+                    <MudNumericField @bind-Value="debt.Amount" Label="Amount" Required="true" />
+                    <MudDatePicker @bind-Value="debt.DueDate" Label="Due Date" Required="true" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.LibraryAdd" Color="Color.Primary" OnClick="AddDebt">Add</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+

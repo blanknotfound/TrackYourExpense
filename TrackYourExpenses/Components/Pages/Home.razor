@@ -73,7 +73,7 @@
         <MudTd DataLabel="Tags">
             @{
                 var tagname = TransactionServices.GettagsById(@context.tagId);
-                <span>@(tag == null ? "Unknown" : tagname.Name)</span>
+                <span>@(tagname == null ? "Unknown" : tagname.Name)</span>
             }
         </MudTd>
         <MudTd DataLabel="Date">@context.Date</MudTd>
