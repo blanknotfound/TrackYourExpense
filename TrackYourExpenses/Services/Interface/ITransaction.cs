@@ -9,6 +9,8 @@ namespace TrackYourExpenses.Services.Interface
         CustomTags GettagsById(Guid id);
         List<CustomTags> GetTags();
         bool AddTags(CustomTags ctags);
-        List<Transaction> AddInflow(Transaction transaction);
+        bool AddInflow(Transaction transaction);
+
+        Task<List<Transaction>> SearchTransaction(string searchName);
     }
 }

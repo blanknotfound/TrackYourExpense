@@ -6,6 +6,8 @@
 
         public string Password { get; set; }
 
+        public int BalanceAmt { get; set; } 
+
         public Currency SCurrency { get; set; }
     }
 }

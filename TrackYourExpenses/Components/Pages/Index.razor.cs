@@ -16,7 +16,7 @@ namespace TrackYourExpenses.Components.Pages
             }
             else
             {
-                Nav.NavigateTo("/Dashboard");
+                Nav.NavigateTo("/dashboard");
             }
         }
     }

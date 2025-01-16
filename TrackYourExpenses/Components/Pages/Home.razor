@@ -3,25 +3,26 @@
 @using System.ComponentModel.DataAnnotations
 @using TrackYourExpenses.Model
 
-<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black};")">Add Inflow</MudText>
+<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black};")">Add Transaction</MudText>
 <EditForm Model="@transaction">
     <DataAnnotationsValidator />
     <MudGrid>
         <MudItem xs="12" sm="7">
             <MudCard>
                 <MudCardContent>
-                    <MudTextField Label="Title" HelperText="Max. 8 characters"
+                    <MudTextField Label="Title" HelperText="Max. 8 characters" Class="mt-3"
                                   @bind-Value="transaction.Title" For="@(() => transaction.Title)" />
                     <MudTextField Label="Amount" Class="mt-3"
                                   @bind-Value="transaction.Amount" For="@(() => transaction.Amount)" />
-                    <MudSelect @bind-Value="transaction.tagId" Label="Select Tags" HelperText="Tag" Placeholder="Please Select" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                    <MudTextField Label="Type" HelperText="Type of Transaction(Inflow,Outflow,Debt)" Class="mt-3"
+                                  @bind-Value="transaction.Type" For="@(() => transaction.Type)" />
+                    <MudSelect Class="mt-3" @bind-Value="transaction.tagId" Label="Select Tags" HelperText="Tag" Placeholder="Please Select" AdornmentIcon="@Icons.Material.Filled.Bookmarks" AdornmentColor="Color.Primary">
                         @foreach (var customt in Tags)
                         {
                             <MudSelectItem Value=@(customt.Id)>@(customt.Name)</MudSelectItem>
                         }
                     </MudSelect>
-                    <MudTextField Label="Type" HelperText="" Class="mt-3"
-                                  @bind-Value="transaction.Type" For="@(() => transaction.Type)" />
+                    <MudDatePicker @bind-Date="transaction.Date" Label="Select a Date" Format="dd-MMM-yyyy" />
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="AddIncome">Add</MudButton>
@@ -31,7 +32,7 @@
     </MudGrid>
 </EditForm>
 
-<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black};")">Add CustomTags</MudText>
+<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black}")">Add CustomTags</MudText>
 <EditForm Model="@tag">
     <DataAnnotationsValidator />
     <MudGrid>
@@ -49,14 +50,21 @@
     </MudGrid>
 </EditForm>
 
-<MudText Typo="Typo.h3" Class="mud-width-full py-8 px-10" Style="@($"color:{Colors.Gray.Lighten5};")">Transaction</MudText>
-<MudTable Items="@DisplayT" Hover="true" SortLabel="Sort By" >
+
+<MudText Typo="Typo.h3" Class="mud-width-full py-8 px-10" Style="@($"color:{Colors.Shades.Black}")">Transaction</MudText>
+<MudTable Items="@Filtered" Hover="true" ReadOnly="true">
+    <ToolBarContent>
+        <MudTextField @bind-Value="Search" Placeholder="Search Title" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <!--<MudButton OnClick="@(() => FilteredTransaction())" Variant="Variant.Filled" Color="Color.Primary">
+            Apply Filter
+        </MudButton>-->
+    </ToolBarContent>
     <HeaderContent>
         <MudTh>Title</MudTh>
         <MudTh>Amount</MudTh>
         <MudTh>Type</MudTh>
         <MudTh>Tags</MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Transaction, object>(x=>x.Date)">Date</MudTableSortLabel ></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Transaction, object>(x=>x.Date)">Date</MudTableSortLabel></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Title">@context.Title</MudTd>
@@ -64,8 +72,8 @@
         <MudTd DataLabel="Type">@context.Type</MudTd>
         <MudTd DataLabel="Tags">
             @{
-                var creator = TransactionServices.GettagsById(@context.tagId);
-                <span>@(creator == null ? "Unknown" : creator.Name)</span>
+                var tagname = TransactionServices.GettagsById(@context.tagId);
+                <span>@(tag == null ? "Unknown" : tagname.Name)</span>
             }
         </MudTd>
         <MudTd DataLabel="Date">@context.Date</MudTd>

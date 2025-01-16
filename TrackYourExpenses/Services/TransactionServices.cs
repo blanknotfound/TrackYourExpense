@@ -1,4 +1,6 @@
 ﻿
+using DataAccess.Services;
+using DataAccess.Services.Interface;
 using DataModel.Model;
 using TrackYourExpenses.Model;
 using TrackYourExpenses.Model.Abstraction;
@@ -9,10 +11,19 @@ namespace TrackYourExpenses.Services
 {
     public class TransactionServices : TransactionServicesBase, ITransaction
     {
+        //declaration
         private List<Transaction> _Transaction;
         private List<CustomTags> Ctags;
+        private readonly IUser _userService;
+        private DateTime StartDate { get; set; } = DateTime.Now.AddDays(-30);
+        private DateTime EndDate { get; set; } = DateTime.Now.AddDays(30);
+
+
+        //transaction services
         public TransactionServices()
         {
+            _Transaction = GetAllDetails();
+            //_userService = userservice;
         }
 
         #region tags
@@ -45,15 +56,15 @@ namespace TrackYourExpenses.Services
             return Ctags.FirstOrDefault(x => x.Id == id);
         }
         #endregion
-
-        public List<Transaction> AddInflow(Transaction transaction)
+        #region Adding transactions
+        public bool AddInflow(Transaction transaction)
         {
             //if (dueDate < DateTime.Today)
             //{
             //    throw new Exception("Due date must be in the future.");
             //}
 
-            _Transaction = GetAllDetails();
+
             _Transaction.Add(new Transaction
             {
                 Title = transaction.Title,
@@ -61,10 +72,9 @@ namespace TrackYourExpenses.Services
                 Type = transaction.Type,
                 Date = transaction.Date,
                 tagId = transaction.tagId,
-                Balanceamt = transaction.Balanceamt
             });
             SaveTransaction(_Transaction);
-            return _Transaction;
+            return true;
         }
         public List<Transaction> GetAllTransactions()
         {
@@ -78,5 +88,25 @@ namespace TrackYourExpenses.Services
                 return new List<Transaction>();
             }
         }
+
+        public async Task <List<Transaction>> SearchTransaction(string searchName)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(searchName))
+                    throw new ArgumentNullException("Search Cannot be Null or Empty", nameof(searchName));
+
+                return await Task.FromResult(
+                    _Transaction
+                    .Where(t => t.Date >= StartDate && t.Date <= EndDate)
+                    .Where(t => t.Title.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList());
+
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("An error occurred while searching for the Transaction.", ex);
+            }
+        }
+        #endregion
     }
 }

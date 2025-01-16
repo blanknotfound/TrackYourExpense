@@ -1,5 +1,6 @@
 ﻿using DataAccess.Services.Interface;
 using DataModel.Model;
+using Microsoft.VisualBasic;
 using TrackYourExpenses.Model.Abstraction;
 
 namespace DataAccess.Services
@@ -14,7 +15,6 @@ namespace DataAccess.Services
         public UserService()
         {
             _users = LoadUsers();
-
             if (!_users.Any())
             {
                 _users.Add(new User { UserName = SeedUsername, Password = SeedPassword });
@@ -32,5 +32,25 @@ namespace DataAccess.Services
             // Check if the username and password match any user in the list.
             return _users.Any(u => u.UserName == user.UserName && u.Password == user.Password);
         }
+
+        public int getBalanceamt()
+        {
+            User user = _users.FirstOrDefault();
+            return user.BalanceAmt;
+        }
+
+        public bool updateBalanceAmt(int balanceamt)
+        {
+            if (_users == null)
+            {
+                throw new Exception("user not found.");
+            }
+            User user = _users.FirstOrDefault();
+            user.BalanceAmt = balanceamt;
+            SaveUsers(_users);
+            return true;
+
+        }
+
     }
 }

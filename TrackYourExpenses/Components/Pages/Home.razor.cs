@@ -1,27 +1,48 @@
 ﻿
 
 using DataModel.Model;
-using Microsoft.Maui.Controls;
 using TrackYourExpenses.Model;
 
 namespace TrackYourExpenses.Components.Pages
 {
     public partial class Home
     {
-        private List<Transaction> DisplayT = new();
         private List<CustomTags> Tags { get; set; } = new();
         private string ErrorMessage { get; set; } = string.Empty;
-        protected override void OnInitialized()
-        {
-            DisplayT = TransactionServices.GetAllTransactions();
-            Tags = TransactionServices.GetTags();
-        }
+
+        private string _search = string.Empty;
+        
+        private List<Transaction> Filtered = new();
         private Transaction transaction { get; set; } = new();
         private CustomTags tag{ get; set; } = new();
+
+        protected override void OnInitialized()
+        {
+            Filtered = TransactionServices.GetAllTransactions();
+            Tags = TransactionServices.GetTags();
+        }
         private void AddIncome()
         {
-            TransactionServices.AddInflow(transaction);
-            //TransactionServices.AddInflow("sams2", 10, "credit", DateTime.Now.AddDays(-5), "test2", 240);
+            if (TransactionServices.AddInflow(transaction))
+            {
+                if (transaction.Type.ToLower() == "inflow"|| transaction.Type.ToLower() == "Debt")
+                {
+                    int balance = UserService.getBalanceamt();
+                    int Currentbalance = balance + transaction.Amount;
+                    UserService.updateBalanceAmt(Currentbalance);
+                }
+                else if(transaction.Type.ToLower() == "outflow")
+                    {
+                    int balance = UserService.getBalanceamt();
+                    int Currentbalance = balance - transaction.Amount;
+                    UserService.updateBalanceAmt(Currentbalance);
+                }
+                Nav.NavigateTo("/dashboard");
+            }
+            else
+            {
+                ErrorMessage = "Data not inserted";
+            }
         }
         private void AddTag()
         {
@@ -35,5 +56,56 @@ namespace TrackYourExpenses.Components.Pages
                 ErrorMessage = "Data not inserted";
             }
         }
+
+        #region searchtitle
+        //private bool FilterFunc(Transaction transaction)
+        //{
+        //    if (string.IsNullOrWhiteSpace(_search))
+        //        return true;
+        //    if (transaction.Title.Contains(_search, StringComparison.OrdinalIgnoreCase))
+        //        return true;
+        //    return false;
+        //}
+        private async Task FilteredTransaction()
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(Search))
+                {
+                    Filtered = TransactionServices.GetAllTransactions();
+                    ErrorMessage = string.Empty;
+                    return;
+                }
+                Filtered = await TransactionServices.SearchTransaction(Search);
+
+                if (!Filtered.Any())
+                {
+                    ErrorMessage = "No Match Users Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+        }
+        private string Search
+        {
+            get => _search;
+
+            set
+            {
+                if (_search == value) return;
+                _search = value;
+                _ = OnSearchInput(_search);
+            }
+        }
+        private async Task OnSearchInput(string search)
+        {
+            Search = search;
+            FilteredTransaction();
+            StateHasChanged();
+        }
+        #endregion
     }
 }
+
