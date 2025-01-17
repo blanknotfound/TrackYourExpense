@@ -1,5 +1,4 @@
 ﻿
-using DataAccess.Services;
 using DataAccess.Services.Interface;
 using DataModel.Model;
 using TrackYourExpenses.Model;
@@ -19,11 +18,11 @@ namespace TrackYourExpenses.Services
         private DateTime EndDate { get; set; } = DateTime.Now.AddDays(30);
 
 
-        //transaction services
-        public TransactionServices()
+        //transaction services constructor
+        public TransactionServices(IUser userservice)
         {
             _Transaction = GetAllDetails();
-            //_userService = userservice;
+            _userService = userservice;
         }
 
         #region tags
@@ -59,12 +58,25 @@ namespace TrackYourExpenses.Services
         #region Adding transactions
         public bool AddInflow(Transaction transaction)
         {
-            //if (dueDate < DateTime.Today)
-            //{
-            //    throw new Exception("Due date must be in the future.");
-            //}
-
-
+            if (transaction.Type.ToLower() == "inflow" || transaction.Type.ToLower() == "debt")
+            {
+                int balance = _userService.getBalanceamt();
+                int Currentbalance = balance + transaction.Amount;
+                _userService.updateBalanceAmt(Currentbalance);
+            }
+            else if (transaction.Type.ToLower() == "outflow" || transaction.Type.ToLower() == "debt paid")
+            {
+                int balance = _userService.getBalanceamt();
+                if (balance > transaction.Amount)
+                {
+                    int Currentbalance = balance - transaction.Amount;
+                    _userService.updateBalanceAmt(Currentbalance);
+                }
+                else
+                {
+                    return false;
+                }
+            }
             _Transaction.Add(new Transaction
             {
                 Title = transaction.Title,
@@ -72,6 +84,7 @@ namespace TrackYourExpenses.Services
                 Type = transaction.Type,
                 Date = transaction.Date,
                 tagId = transaction.tagId,
+                note = transaction.note
             });
             SaveTransaction(_Transaction);
             return true;
@@ -106,6 +119,44 @@ namespace TrackYourExpenses.Services
             {
                 throw new InvalidOperationException("An error occurred while searching for the Transaction.", ex);
             }
+        }
+        #endregion
+
+        #region Dashboard
+        public int GetTotalTransaction()
+        {
+            // Fetch all transactions from the data source
+            var transactions = GetAllDetails();
+
+            // Sum the transaction amounts
+            var TotalTransactions = transactions.Count;
+
+            return TotalTransactions;
+        }
+        public int GetLowestInflow()
+        {
+            var transactions = GetAllDetails();
+            // Get the inflow transactions
+            var inflows = transactions.Where(t => t.Type == "Inflow"||t.Type =="debt").Select(t => t.Amount).ToList();
+
+            // Get the lowest inflow amount or 0 if there are no inflows
+            int lowestInflow = inflows.Any() ? inflows.Min() : 0;
+
+            // Convert the lowest inflow to an int (assuming you want to round down)
+            return lowestInflow;
+        }
+
+        public int GetHighestInflow()
+        {
+            var transactions = GetAllDetails();
+            // Get the inflow transactions
+            var inflows = transactions.Where(t => t.Type == "Inflow"||t.Type == "debt").Select(t => t.Amount).ToList();
+
+            // Get the highest inflow amount or 0 if there are no inflows
+            int highestInflow = inflows.Any() ? inflows.Max() : 0;
+
+            // Convert the highest inflow to an int (assuming you want to round down)
+            return highestInflow;
         }
         #endregion
     }

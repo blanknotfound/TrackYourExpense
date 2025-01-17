@@ -12,5 +12,6 @@ namespace DataModel.Model
         public string Type { get; set; }
         public DateTime? Date { get; set; }
         public Guid tagId { get; set; }
+        public String note { get; set; }
     }
 }

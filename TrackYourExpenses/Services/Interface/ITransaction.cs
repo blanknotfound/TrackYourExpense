@@ -12,5 +12,8 @@ namespace TrackYourExpenses.Services.Interface
         bool AddInflow(Transaction transaction);
 
         Task<List<Transaction>> SearchTransaction(string searchName);
+        int GetHighestInflow();
+        int GetLowestInflow();
+        int GetTotalTransaction();
     }
 }

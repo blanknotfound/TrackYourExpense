@@ -25,18 +25,6 @@ namespace TrackYourExpenses.Components.Pages
         {
             if (TransactionServices.AddInflow(transaction))
             {
-                if (transaction.Type.ToLower() == "inflow"|| transaction.Type.ToLower() == "Debt")
-                {
-                    int balance = UserService.getBalanceamt();
-                    int Currentbalance = balance + transaction.Amount;
-                    UserService.updateBalanceAmt(Currentbalance);
-                }
-                else if(transaction.Type.ToLower() == "outflow")
-                    {
-                    int balance = UserService.getBalanceamt();
-                    int Currentbalance = balance - transaction.Amount;
-                    UserService.updateBalanceAmt(Currentbalance);
-                }
                 Nav.NavigateTo("/dashboard");
             }
             else

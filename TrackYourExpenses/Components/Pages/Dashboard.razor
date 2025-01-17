@@ -7,14 +7,25 @@
     <MudGrid>
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;">
-                <MudText Typo="Typo.h5" Class="mb-4">Current Balance:@(Balanceamt())</MudText>
+                <MudText Typo="Typo.h5" Class="mb-4">Total Transaction Value:@(Balanceamt())</MudText>
             </MudPaper>
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;">
+                <MudCardContent Style="@($"color:{Colors.Teal.Default}")">
+                    <MudText Typo="Typo.h4" Align="Align.Center">Total Transactions</MudText>
+                    <MudText Typo="Typo.h4" Align="Align.Center">@TotalTransactions</MudText>
+                </MudCardContent>
+            </MudPaper>
         </MudItem>
         <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;">
+                <MudCardContent>
+                    <MudText Typo="Typo.h4" Align="Align.Center" Style="@($"color:{Colors.Green.Default}")">Inflow Details</MudText>
+                    <MudText Typo="Typo.h6" Align="Align.Center">Lowest Inflow:@LowestInflow</MudText>
+                    <MudText Typo="Typo.h6" Align="Align.Center">Higesst Inflow:@HighestInflow</MudText>
+                </MudCardContent>
+            </MudPaper>
         </MudItem>
         <MudItem xs="12" sm="6">
             <MudGrid>

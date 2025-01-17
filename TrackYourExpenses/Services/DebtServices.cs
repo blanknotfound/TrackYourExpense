@@ -15,6 +15,17 @@ namespace TrackYourExpenses.Services
             _transactionService = transactionService;
             _debts = GetAllDebts();
         }
+        public List<Debt> GetDebts()
+        {
+            if (_debts != null)
+            {
+                return _debts;
+            }
+            else
+            {
+                return new List<Debt>();
+            }
+        }
 
         public Debt AddDebt(Debt debt)
         {
@@ -40,9 +51,43 @@ namespace TrackYourExpenses.Services
                 DueDate = debt.DueDate,
                 TransactionId = inflowTransaction.Id
             });
-            _debts.Add(debt);
             SaveDebt(_debts);
             return debt;
         }
+
+        // Mark a debt as paid and link to an outflow transaction
+        public void Updatedebt(Guid debtId)
+        {
+            var debt = _debts.FirstOrDefault(d => d.Id == debtId);
+            if (debt == null || debt.Status)
+            {
+                throw new InvalidOperationException("Debt not found or already paid.");
+            }
+
+            // Create a linked outflow transaction
+            var Transaction = new Transaction
+            {
+                Id = Guid.NewGuid().ToString(),
+                Title = $"Debt payment to {debt.Creditor}",
+                Amount = debt.Amount,
+                Date = DateTime.Now,
+                Type = "Debt Paid",
+                tagId = Guid.NewGuid()
+            };
+            if (_transactionService.AddInflow(Transaction))
+            {
+                // Update the debt
+                debt.Status = true;
+                debt.PaidDate = DateTime.Now;
+                debt.TransactionId = Transaction.Id;
+
+                SaveDebt(_debts);
+            }
+            else
+            {
+                throw new Exception ("Balance not sufficient");
+            }
+        }
+
     }
 }

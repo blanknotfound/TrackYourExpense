@@ -1,7 +1,9 @@
 ﻿@page "/debt"
 @using System.ComponentModel.DataAnnotations
+@using TrackYourExpenses.Model
+@using TrackYourExpenses.Services
 
-<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black}")">Add CustomTags</MudText>
+<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black}")">DEBTS</MudText>
 <EditForm Model="@debt">
     <DataAnnotationsValidator />
     <MudGrid>
@@ -10,6 +12,8 @@
                 <MudCardContent>
                     <MudTextField Label="Title" HelperText="Max. 8 characters" Class="mt-3"
                                   @bind-Value="debt.Title" For="@(() => debt.Title)" />
+                    <MudTextField Label="Creditor" HelperText="Max. 8 characters" Class="mt-3"
+                                  @bind-Value="debt.Creditor" For="@(() => debt.Creditor)" />
                     <MudNumericField @bind-Value="debt.Amount" Label="Amount" Required="true" />
                     <MudDatePicker @bind-Value="debt.DueDate" Label="Due Date" Required="true" />
                 </MudCardContent>
@@ -20,4 +24,56 @@
         </MudItem>
     </MudGrid>
 </EditForm>
+
+
+<MudCard>
+    <MudCardContent>
+        <MudText Typo="Typo.h5" Align="Align.Center">Manage Debts</MudText>
+
+        <MudTable Items="Debts" Dense="true" Hover="true" Bordered="true">
+            <HeaderContent>
+                <MudTh>Creditor</MudTh>
+                <MudTh>Title</MudTh>
+                <MudTh>Amount</MudTh>
+                <MudTh>Taken Date</MudTh>
+                <MudTh>Due Date</MudTh>
+                <MudTh>Status</MudTh>
+                <MudTh>Actions</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@context.Creditor</MudTd>
+                <MudTd>@context.Title</MudTd>
+                <MudTd>@context.Amount</MudTd>
+                <MudTd>@context.takenDate.ToShortDateString()</MudTd>
+                <MudTd>@context.DueDate.ToShortDateString()</MudTd>
+                <MudTd>
+                    @if (context.Status)
+                    {
+                        <MudChip T="string" Variant="Variant.Outlined" Color="Color.Success">Paid</MudChip>
+                    }
+                    else
+                    {
+                       <MudChip T="string" Variant="Variant.Outlined" Color="Color.Warning">Pending</MudChip>
+                    }
+                </MudTd>
+                <MudTd>
+                    @if (context.Status)
+                    {
+                        <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="() => ChangeStatus(context.Id, false)">
+                            Mark as Pending
+                        </MudButton>
+                    }
+                    else
+                    {
+                        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="() => ChangeStatus(context.Id, true)">
+                            Mark as Paid
+                        </MudButton>
+                    }
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudCardContent>
+</MudCard>
+
+
 

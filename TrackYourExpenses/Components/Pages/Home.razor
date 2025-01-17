@@ -1,16 +1,20 @@
 ﻿@page "/Transaction"
 @using MudBlazor
 @using System.ComponentModel.DataAnnotations
-@using TrackYourExpenses.Model
 
-<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black};")">Add Transaction</MudText>
+
+<MudText Typo="Typo.h3" Class="mud-width-full" Style="@($"color:{Colors.Shades.Black}")">Add Transaction</MudText>
+@if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <div class="alert alert-danger">@ErrorMessage</div>
+            }
 <EditForm Model="@transaction">
     <DataAnnotationsValidator />
     <MudGrid>
         <MudItem xs="12" sm="7">
             <MudCard>
                 <MudCardContent>
-                    <MudTextField Label="Title" HelperText="Max. 8 characters" Class="mt-3"
+                    <MudTextField Label="Title" HelperText="Enter title for" Class="mt-3"
                                   @bind-Value="transaction.Title" For="@(() => transaction.Title)" />
                     <MudTextField Label="Amount" Class="mt-3"
                                   @bind-Value="transaction.Amount" For="@(() => transaction.Amount)" />
@@ -23,6 +27,8 @@
                         }
                     </MudSelect>
                     <MudDatePicker @bind-Date="transaction.Date" Label="Select a Date" Format="dd-MMM-yyyy" />
+                    <MudTextField Label="Note" HelperText="Want to add a note??" Class="mt-3"
+                                  @bind-Value="transaction.note" For="@(() => transaction.note)" />
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="AddIncome">Add</MudButton>
