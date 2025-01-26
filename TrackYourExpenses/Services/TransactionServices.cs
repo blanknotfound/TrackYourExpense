@@ -158,6 +158,31 @@ namespace TrackYourExpenses.Services
             // Convert the highest inflow to an int (assuming you want to round down)
             return highestInflow;
         }
+        public int GetLowestoutflow()
+        {
+            var transactions = GetAllDetails();
+            // Get the outflow transactions
+            var inflows = transactions.Where(t => t.Type == "Outflow" || t.Type == "debt paid").Select(t => t.Amount).ToList();
+
+            // Get the lowest outflow amount or 0 if there are no inflows
+            int lowestInflow = inflows.Any() ? inflows.Min() : 0;
+
+            // Convert the lowest outflow to an int (assuming you want to round down)
+            return lowestInflow;
+        }
+
+        public int GetHighestOutflow()
+        {
+            var transactions = GetAllDetails();
+            // Get the outflow transactions
+            var inflows = transactions.Where(t => t.Type == "Outflow" || t.Type == "debt paid").Select(t => t.Amount).ToList();
+
+            // Get the highest outflow amount or 0 if there are no inflows
+            int highestInflow = inflows.Any() ? inflows.Max() : 0;
+
+            // Convert the highest outflow to an int (assuming you want to round down)
+            return highestInflow;
+        }
         #endregion
     }
 }

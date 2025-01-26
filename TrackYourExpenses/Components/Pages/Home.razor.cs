@@ -23,13 +23,21 @@ namespace TrackYourExpenses.Components.Pages
         }
         private void AddIncome()
         {
-            if (TransactionServices.AddInflow(transaction))
+            if (transaction.Amount < 0)
             {
-                Nav.NavigateTo("/dashboard");
+                ErrorMessage = "Amount cannot be negative.";
+                return; // Stop execution if the value is negative
             }
             else
             {
-                ErrorMessage = "Data not inserted";
+                if (TransactionServices.AddInflow(transaction))
+                {
+                    Nav.NavigateTo("/Transaction");
+                }
+                else
+                {
+                    ErrorMessage = "Data not inserted";
+                }
             }
         }
         private void AddTag()

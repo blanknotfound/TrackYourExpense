@@ -13,7 +13,9 @@ namespace TrackYourExpenses.Components.Pages
         private int TotalTransactions;
         private int TotalTransactionValue;
         private int LowestInflow;
-        public int HighestInflow;
+        private int HighestInflow;
+        private int Lowestoutflow;
+        public int Highestoutflow;
         private List<Transaction> DisplayT = new();
         private string ErrorMessage { get; set; } = string.Empty;
 
@@ -24,6 +26,8 @@ namespace TrackYourExpenses.Components.Pages
             TotalTransactionValue = UserService.getBalanceamt();
             LowestInflow = TransactionServices.GetLowestInflow();
             HighestInflow = TransactionServices.GetHighestInflow();
+            Lowestoutflow = TransactionServices.GetLowestoutflow();
+            Highestoutflow = TransactionServices.GetHighestOutflow();
         }
         [CascadingParameter]
         private UserState _LiveState { get; set; }

@@ -15,5 +15,8 @@ namespace TrackYourExpenses.Services.Interface
         int GetHighestInflow();
         int GetLowestInflow();
         int GetTotalTransaction();
+
+        int GetLowestoutflow();
+        int GetHighestOutflow();
     }
 }

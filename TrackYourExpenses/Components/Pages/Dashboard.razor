@@ -23,14 +23,20 @@
                 <MudCardContent>
                     <MudText Typo="Typo.h4" Align="Align.Center" Style="@($"color:{Colors.Green.Default}")">Inflow Details</MudText>
                     <MudText Typo="Typo.h6" Align="Align.Center">Lowest Inflow:@LowestInflow</MudText>
-                    <MudText Typo="Typo.h6" Align="Align.Center">Higesst Inflow:@HighestInflow</MudText>
+                    <MudText Typo="Typo.h6" Align="Align.Center">Highest Inflow:@HighestInflow</MudText>
                 </MudCardContent>
             </MudPaper>
         </MudItem>
         <MudItem xs="12" sm="6">
             <MudGrid>
-                <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+                <MudItem xs="12" >
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;">
+                        <MudCardContent>
+                    <MudText Typo="Typo.h4" Align="Align.Center">Outflow Details</MudText>
+                    <MudText Typo="Typo.h6" Align="Align.Center">Lowest Outflow:@Lowestoutflow</MudText>
+                    <MudText Typo="Typo.h6" Align="Align.Center">Highest Outflow:@Highestoutflow</MudText>
+                </MudCardContent>
+                    </MudPaper>
                 </MudItem>
                 <MudItem xs="12">
                     <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
